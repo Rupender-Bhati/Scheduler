@@ -1,26 +1,27 @@
 #include<iostream>
-#include<string.h>
-using namespace::std;
+#include<string>
+using namespace std;
 
 class Process
 {
-    public int current_burst_time=0;
-    public int time_waited;
-	public int arrival_time=0;
-	int burst_time=0;
-	public String process_id;
+public:
+    int current_burst_time;
+    int time_waited;
+	int arrival_time;
+	int burst_time;
+	string process_id;
 
-	public Process()
+	Process()
 	{
 
-        Cout<<"Enter the process name\n";
-        Cin>>process_id;
-        Cout<<"Enter Arrival time\n";
-        Cin>>arrival_time;
-        Cout<<"Enter the burst time required";
-        Cin>>arrival_time;
+        cout<<"Enter the process name\n";
+        cin>>process_id;
+        cout<<"Enter Arrival time\n";
+        cin>>arrival_time;
+        cout<<"Enter the burst time required";
+        cin>>arrival_time;
 	}
-}
+};
 
 int main()
 {
