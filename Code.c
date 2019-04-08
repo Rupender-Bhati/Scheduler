@@ -2,6 +2,7 @@
 #include<stdlib.h>
 #include<string.h>
 #include<stdbool.h>
+#include<Windows.h>
 
 int clock=0;
 struct Process
@@ -28,10 +29,11 @@ void get_entries(struct Process *p)
     printf("\nEnter the process name");
     scanf("%s",&p->process_id);
     p->time_waited=0;
-    p->process_active=false;
+    p->process_active=0;
     p->current_burst_time=p->burst_time;
     p->process_active=0;
     p->process_finished=0;
+    p->used_time=0;
 
 }
 
@@ -103,6 +105,12 @@ int main()
 
     for(int i=0;i<4;i++)
     {
+        if(process_list[i].arrival_time>clock)
+        {
+            int diff= process_list[i].arrival_time-clock;
+            clock+=diff;
+        }
+
         deduct_burst_time(&process_list[i],3);
         if(i==0)
         {
@@ -113,6 +121,15 @@ int main()
         clock+=process_list[i].used_time;
 
 
+    }
+    Sleep(3000);
+    system("cls");
+    printf("Process Name:  Time Added:  Burst Time:  Current Burst Time:   Time Waited:    Time Consumed:  Status \n");
+    for(int i=0;i<4;i++)
+    {
+        printf("%s               %d          %d                 %d                   %d                  %d               %d          \n",process_list[i].process_id,process_list[i].arrival_time,
+               process_list[i].burst_time,process_list[i].current_burst_time,
+               process_list[i].time_waited,process_list[i].used_time, process_list[i].process_finished);
     }
 
 }
