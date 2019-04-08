@@ -13,6 +13,7 @@ struct Process
 	int burst_time;
 	int process_active;
 	int process_finished;
+	int used_time;
 
 	char process_id[5];
 
@@ -54,18 +55,28 @@ int check_process_finish(struct Process p)
     else
         return 0;
 }
+
+
+
 int deduct_burst_time(struct Process *p,int x)
 {
     int check=p->current_burst_time;
     if(check-x<=0)
     {
         finish_process(p);
+         p->used_time+=p->current_burst_time;
         (p->current_burst_time)=0;
-        return(x-check);
+        return (x-check);
+
     }
     else
-        (p->current_burst_time)-=x;
+       {
+
+       (p->current_burst_time)-=x;
+        p->used_time+=x;
         return 0;
+
+       }
 
 
 }
@@ -81,7 +92,28 @@ int main()
         get_entries(&(process_list[i]));
 
     }
+    printf("Process Name:  Time Added:  Burst Time:  Current Burst Time:\n");
+    for(int i=0;i<4;i++)
+    {
+        printf("%s   %d    %d    %d   %d\n",process_list[i].process_id,process_list[i].arrival_time,process_list[i].burst_time,process_list[i].current_burst_time);
+    }
 
+
+    //first iteration
+
+    for(int i=0;i<4;i++)
+    {
+        deduct_burst_time(&process_list[i],3);
+        if(i==0)
+        {
+            process_list[0].time_waited=0;
+        }
+        else
+            process_list[i].time_waited=clock-process_list[i].arrival_time;
+        clock+=process_list[i].used_time;
+
+
+    }
 
 }
 
