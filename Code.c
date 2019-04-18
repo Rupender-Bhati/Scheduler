@@ -5,6 +5,7 @@
 #include<Windows.h>
 
 int clock=0;
+int clock_idle_time;
 struct Process
 {
 
@@ -68,7 +69,7 @@ int deduct_burst_time(struct Process *p,int x)
         finish_process(p);
          p->used_time+=p->current_burst_time;
         (p->current_burst_time)=0;
-        return (x-check);
+        return (check);
 
     }
     else
@@ -109,11 +110,27 @@ int main()
         {
             int diff= process_list[i].arrival_time-clock;
             clock+=diff;
+            clock_idle_time+=diff;
         }
+        else
+        {
+
+        }
+        if(i==0)
+        {
+            process_list[i].time_waited=0;
+            deduct_burst_time(&process_list[i],3);
+
+            clock+=process_list[i].used_time;
+        }
+        else
+        {
 
         deduct_burst_time(&process_list[i],3);
         process_list[i].time_waited=clock-process_list[i].arrival_time;
         clock+=process_list[i].used_time;
+
+        }
 
 
     }
@@ -128,15 +145,20 @@ int main()
                process_list[i].time_waited,process_list[i].used_time, process_list[i].process_finished);
     }
 
+    clock=0;
+
+    for(int i=0;i<4;i++)
+    {
+        clock+=process_list[i].used_time;
+    }
+    clock+=clock_idle_time;
+
     //Second iteration
 
     for(int i=0;i<4;i++)
         {
+                process_list[i].time_waited=clock-process_list[i].used_time-process_list[i].arrival_time;
                 clock+=deduct_burst_time(&process_list[i],6);
-                process_list[i].time_waited=clock-process_list[i].time_waited-process_list[i].used_time;
-
-
-
         }
 
     Sleep(6000);
