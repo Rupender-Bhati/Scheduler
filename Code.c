@@ -112,17 +112,13 @@ int main()
         }
 
         deduct_burst_time(&process_list[i],3);
-        if(i==0)
-        {
-            process_list[0].time_waited=0;
-        }
-        else
-            process_list[i].time_waited=clock-process_list[i].arrival_time;
+        process_list[i].time_waited=clock-process_list[i].arrival_time;
         clock+=process_list[i].used_time;
 
 
     }
     Sleep(3000);
+
     system("cls");
     printf("Process Name:  Time Added:  Burst Time:  Current Burst Time:   Time Waited:    Time Consumed:  Status \n");
     for(int i=0;i<4;i++)
@@ -131,6 +127,33 @@ int main()
                process_list[i].burst_time,process_list[i].current_burst_time,
                process_list[i].time_waited,process_list[i].used_time, process_list[i].process_finished);
     }
+
+    //Second iteration
+
+    for(int i=0;i<4;i++)
+        {
+
+                process_list[i].time_waited=clock-process_list[i].time_waited-process_list[i].used_time;
+                deduct_burst_time(&process_list[i],6);
+                clock+=process_list[i].used_time;
+
+
+        }
+
+    Sleep(6000);
+    system("pause");
+    system("cls");
+    printf("Second Iteration \n");
+    printf("Process Name:  Time Added:  Burst Time:  Current Burst Time:   Time Waited:    Time Consumed:  Status \n");
+    for(int i=0;i<4;i++)
+    {
+        printf("%s               %d          %d                 %d                   %d                  %d               %d          \n",process_list[i].process_id,process_list[i].arrival_time,
+               process_list[i].burst_time,process_list[i].current_burst_time,
+               process_list[i].time_waited,process_list[i].used_time, process_list[i].process_finished);
+    }
+
+
+
 
 }
 
