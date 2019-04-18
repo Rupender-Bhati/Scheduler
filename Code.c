@@ -157,6 +157,9 @@ int main()
 
     for(int i=0;i<4;i++)
         {
+            if(process_list[i].process_finished==1)
+                continue;
+
                 process_list[i].time_waited=clock-process_list[i].used_time-process_list[i].arrival_time;
                 clock+=deduct_burst_time(&process_list[i],6);
         }
@@ -173,6 +176,32 @@ int main()
                process_list[i].time_waited,process_list[i].used_time, process_list[i].process_finished);
     }
 
+    struct Process temp;
+    for(int i=0;i<3;i++)
+    {
+        for(int j=i+1;j<4;j++)
+        {
+            if(process_list[i].current_burst_time>process_list[j].current_burst_time)
+            {
+                temp=process_list[i];
+                process_list[i]=process_list[j];
+                process_list[j]=temp;
+
+
+            }
+        }
+    }
+
+    system("pause");
+    system("cls");
+    printf("Second Iteration \n");
+    printf("Process Name:  Time Added:  Burst Time:  Current Burst Time:   Time Waited:    Time Consumed:  Status \n");
+    for(int i=0;i<4;i++)
+    {
+        printf("%s               %d          %d                 %d                   %d                  %d               %d          \n",process_list[i].process_id,process_list[i].arrival_time,
+               process_list[i].burst_time,process_list[i].current_burst_time,
+               process_list[i].time_waited,process_list[i].used_time, process_list[i].process_finished);
+    }
 
 
 
