@@ -76,7 +76,7 @@ int deduct_burst_time(struct Process *p,int x)
 
        (p->current_burst_time)-=x;
         p->used_time+=x;
-        return 0;
+        return x;
 
        }
 
@@ -132,10 +132,9 @@ int main()
 
     for(int i=0;i<4;i++)
         {
-
+                clock+=deduct_burst_time(&process_list[i],6);
                 process_list[i].time_waited=clock-process_list[i].time_waited-process_list[i].used_time;
-                deduct_burst_time(&process_list[i],6);
-                clock+=process_list[i].used_time;
+
 
 
         }
