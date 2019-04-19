@@ -89,14 +89,18 @@ int main()
 {
     struct Process process_list[4];
 
+    int n=0;
+
+    printf("Enter total Number of Processes : \n");
+    scanf("%d",&n);
     //Initialising processes.
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         get_entries(&(process_list[i]));
 
     }
     printf("Process Name:  Time Added:  Burst Time:  Current Burst Time:\n");
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         printf("%s   %d    %d    %d   %d\n",process_list[i].process_id,process_list[i].arrival_time,process_list[i].burst_time,process_list[i].current_burst_time);
     }
@@ -104,7 +108,7 @@ int main()
 
     //first iteration
 
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         if(process_list[i].arrival_time>clock)
         {
@@ -138,7 +142,7 @@ int main()
 
     system("cls");
     printf("Process Name:  Time Added:  Burst Time:  Current Burst Time:   Time Waited:    Time Consumed:  Status \n");
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         printf("%s               %d          %d                 %d                   %d                  %d               %d          \n",process_list[i].process_id,process_list[i].arrival_time,
                process_list[i].burst_time,process_list[i].current_burst_time,
@@ -147,7 +151,7 @@ int main()
 
     clock=0;
 
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         clock+=process_list[i].used_time;
     }
@@ -155,7 +159,7 @@ int main()
 
     //Second iteration
 
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
         {
             if(process_list[i].process_finished==1)
                 continue;
@@ -169,7 +173,7 @@ int main()
     system("cls");
     printf("Second Iteration \n");
     printf("Process Name:  Time Added:  Burst Time:  Current Burst Time:   Time Waited:    Time Consumed:  Status \n");
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         printf("%s               %d          %d                 %d                   %d                  %d               %d          \n",process_list[i].process_id,process_list[i].arrival_time,
                process_list[i].burst_time,process_list[i].current_burst_time,
@@ -177,9 +181,9 @@ int main()
     }
     //Sorting for third iteration
     struct Process temp;
-    for(int i=0;i<3;i++)
+    for(int i=0;i<n-1;i++)
     {
-        for(int j=i+1;j<4;j++)
+        for(int j=i+1;j<n;j++)
         {
             if(process_list[i].current_burst_time>process_list[j].current_burst_time)
             {
@@ -198,14 +202,14 @@ int main()
     system("cls");
     printf("After Sorting\n");
     printf("Process Name:  Time Added:  Burst Time:  Current Burst Time:   Time Waited:    Time Consumed:  Status \n");
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         printf("%s               %d          %d                 %d                   %d                  %d               %d          \n",process_list[i].process_id,process_list[i].arrival_time,
                process_list[i].burst_time,process_list[i].current_burst_time,
                process_list[i].time_waited,process_list[i].used_time, process_list[i].process_finished);
     }
 
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         if(process_list[i].process_finished==1)
             continue;
@@ -222,7 +226,7 @@ int main()
     system("cls");
     printf("Final Iteration\n");
     printf("Process Name:  Time Added:  Burst Time:  Current Burst Time:   Time Waited:    Time Consumed:  Status \n");
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         printf("%s               %d          %d                 %d                   %d                  %d               %d          \n",process_list[i].process_id,process_list[i].arrival_time,
                process_list[i].burst_time,process_list[i].current_burst_time,
@@ -235,7 +239,7 @@ int main()
     system("cls");
     printf("Waiting and Turnaround Times:\n");
     printf("Process Name:  Time Waited:    Time Consumed:  Turnaround Time \n");
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         printf("%s               %d          %d                 %d   \n",process_list[i].process_id,process_list[i].burst_time,process_list[i].time_waited,
                (process_list[i].time_waited+process_list[i].burst_time));
@@ -244,16 +248,16 @@ int main()
 
     float average_turnaround=0;
     float average_wait=0;
-    for(int i=0;i<4;i++)
+    for(int i=0;i<n;i++)
     {
         average_turnaround+=process_list[i].burst_time+process_list[i].time_waited;
     }
-    average_turnaround=average_turnaround/4;
-    for(int i=0;i<4;i++)
+    average_turnaround=average_turnaround/n;
+    for(int i=0;i<n;i++)
     {
         average_wait+=process_list[i].time_waited;
     }
-    average_wait/=4;
+    average_wait/=n;
 
     system("pause");
     printf("Average Turnaround = %f \n",average_turnaround);
