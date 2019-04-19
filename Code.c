@@ -241,7 +241,7 @@ int main()
     printf("Process Name:  Time Waited:    Time Consumed:  Turnaround Time \n");
     for(int i=0;i<n;i++)
     {
-        printf("%s               %d          %d                 %d   \n",process_list[i].process_id,process_list[i].burst_time,process_list[i].time_waited,
+        printf("%s               %d          %d                 %d   \n",process_list[i].process_id,process_list[i].time_waited,process_list[i].burst_time,
                (process_list[i].time_waited+process_list[i].burst_time));
 
     }
